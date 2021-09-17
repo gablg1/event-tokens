@@ -16,25 +16,10 @@ async function main() {
   const deployer = signers[0];
   console.log("Deploying the contracts with the account:", await deployer.getAddress());
 
-  const FEE_WALLET = 5;
-  console.log("Fee account:", accounts[FEE_WALLET]);
+  const etFactory = await ethers.getContractFactory('EventTokens');
+  const et = await etFactory.deploy();
 
-  console.log("Account balance:", (await deployer.getBalance()).toString());
-
-  const cpFactory = await ethers.getContractFactory('CryptoPunks');
-  const cp = await cpFactory.deploy();
-  await cp.createNft(accounts[0]);
-
-  console.log("CryptoPunks address:", cp.address);
-
-  const ptdFactory = await ethers.getContractFactory('PatronTokensDeployer');
-  const ptd = await ptdFactory.deploy();
-  console.log("PatronTokens Factory address:", cp.address);
-
-  const dtFactory = await ethers.getContractFactory('DoubleTrouble');
-  const dt = await dtFactory.deploy(ptd.address, 30, 2, 1, 130, accounts[FEE_WALLET]);
-  console.log("DoubleTrouble address:", dt.address);
-  console.log("Patron Tokens address:", await dt.patronTokensCollection());
+  console.log("Event Tokens address:", et.address);
 }
 
 main()

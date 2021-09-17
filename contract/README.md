@@ -1,15 +1,14 @@
-# Basic Sample Hardhat Project
-
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
-
-Try running some of the following tasks:
+First make sure you `yarn` in this folder to install dependencies. To run tests do:
 
 ```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+yarn test
 ```
+
+To run a local Hardhat blockchain node on port 8545, do:
+
+```shell
+npx hardhat node
+yarn deploy-local
+```
+
+This way you're able to run a local React dApp that connects to our local Node via Metamask or similar.
