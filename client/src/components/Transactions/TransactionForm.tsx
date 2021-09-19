@@ -165,7 +165,7 @@ const SmallButton = styled(Button)`
   padding: 8px 24px;
 
   &:disabled {
-    color: ${Colors.Gray['600']};
+    color: ${Colors.Brex.Grey};
     cursor: unset;
   }
 
@@ -195,7 +195,7 @@ const Input = styled.input`
   }
 
   &:focus-visible {
-    box-shadow: inset 0 0 0 2px ${Colors.Black['900']};
+    box-shadow: inset 0 0 0 2px ${Colors.Brex.Black};
   }
 `
 
@@ -206,9 +206,9 @@ const CellTitle = styled(TextBold)`
 const InputRow = styled.div`
   display: flex;
   margin: 0 auto;
-  color: ${Colors.Gray['600']};
+  color: ${Colors.Brex.Grey};
   align-items: center;
-  border: ${Colors.Gray['300']} 1px solid;
+  border: ${Colors.Brex.Grey} 1px solid;
   border-radius: ${BorderRad.m};
   overflow: hidden;
 `
@@ -231,12 +231,12 @@ const TitleRow = styled.div`
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  border-bottom: ${Colors.Gray['300']} 1px solid;
+  border-bottom: ${Colors.Brex.Grey} 1px solid;
   padding: 16px;
 `
 
 const BalanceWrapper = styled.div`
-  color: ${Colors.Gray['600']};
+  color: ${Colors.Brex.Grey};
   font-size: 14px;
 `
 
