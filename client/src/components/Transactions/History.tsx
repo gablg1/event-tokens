@@ -210,7 +210,7 @@ const TransactionDetails = styled.div`
 const NotificationWrapper = styled(motion.div)`
   display: flex;
   align-items: center;
-  background-color: ${Colors.White};
+  background-color: ${Colors.Brex.White};
   box-shadow: ${Shadows.notification};
   width: 395px;
   border-radius: 10px;
@@ -280,7 +280,7 @@ const TitleRow = styled(TextBold)`
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  border-bottom: ${Colors.Gray['300']} 1px solid;
+  border-bottom: ${Colors.Brex.Grey} 1px solid;
   padding: 16px;
   font-size: 18px;
 `
@@ -302,5 +302,5 @@ const DateDisplay = styled.div`
 `
 const HourDisplay = styled.div`
   font-size: 12px;
-  color: ${Colors.Gray['600']};
+  color: ${Colors.Brex.Grey};
 `
