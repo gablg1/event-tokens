@@ -9,6 +9,10 @@ const hash = (tokenId, n) => {
 }
 
 const SIGNER = 0;
+const eventTokenId = 1;
+const slot = 2;
+const numSlots = 10;
+const fractionsPerSlot = 2;
 
 describe("EventTokens", () => {
   let et, accounts, signers;
@@ -22,28 +26,33 @@ describe("EventTokens", () => {
 
     et = await etFactory.deploy(accounts[SIGNER]);
     assert.notEqual(et, undefined, "EventTokens contract instance is undefined.");
+
+    expect(await et.totalSupply(eventTokenId)).to.equal(0);
+    await et.createToken(eventTokenId, numSlots, fractionsPerSlot, accounts[SIGNER], "https://foo.bar")
+
+    expect(await et.totalSupply(eventTokenId)).to.equal(numSlots * fractionsPerSlot);
   });
 
   it("Hash works", async () => {
-    const [tokenId, n] = [1, 2];
+    const [tokenId, n] = [eventTokenId, slot];
     expect(await et.hash(tokenId, n)).to.equal(ethers.utils.hashMessage(hash(tokenId, n)));
   });
 
   it("Cannot claim token with wrong signature", async () => {
-    const [tokenId, n] = [1, 2];
+    const [tokenId, n] = [eventTokenId, slot];
     const badSignature = signers[2].signMessage(hash(tokenId, n));
-    await expect(et.claimToken(tokenId, n, badSignature)).to.be.revertedWith('Wrong signature');
+    await expect(et.claimTokenFractions(tokenId, n, badSignature)).to.be.revertedWith('Wrong signature');
   });
 
   it("Claims token with correct signature", async () => {
-    const [tokenId, n] = [1, 2];
+    const [tokenId, n] = [eventTokenId, slot];
     const correctSignature = signers[SIGNER].signMessage(hash(tokenId, n));
 
     expect(await et.balanceOf(accounts[3], tokenId)).to.equal(0);
 
-    await et.connect(signers[3]).claimToken(tokenId, n, correctSignature);
+    await et.connect(signers[3]).claimTokenFractions(tokenId, n, correctSignature);
 
-    expect(await et.balanceOf(accounts[3], tokenId)).to.equal(1);
+    expect(await et.balanceOf(accounts[3], tokenId)).to.equal(fractionsPerSlot);
 
 
   });
