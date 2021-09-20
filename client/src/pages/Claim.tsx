@@ -1,11 +1,7 @@
 import React, { useState } from 'react'
-import { useEthers } from '@usedapp/core'
 import { Container, ContentBlock, ContentRow, MainContent, Section, SectionRow } from '../components/base/base'
-import { utils } from 'ethers'
-import { Text, } from '../typography/Text'
 import { AccountButton } from '../components/account/AccountButton'
 import { Title } from '../typography/Title'
-import {NFTViewer} from './ViewNFT'
 import { InputGroup, FormControl } from 'react-bootstrap';
 import { LoginButton } from "../components/account/AccountButton";
 import { BsQuestionCircle } from "react-icons/bs";
@@ -16,7 +12,6 @@ export function Claim() {
   // const { active } = useEthers();
   const [eventCode, setEventCode] = useState('');
   const [tokenId, setTokenId] = useState(0);
-  const [hover, setHover] = useState(false);
 
   return (
     <MainContent>
