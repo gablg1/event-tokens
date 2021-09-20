@@ -95,4 +95,11 @@ describe("ClaimableTokens", () => {
     expect(await et.name()).to.equal(NAME);
     expect(await et.symbol()).to.equal(SYMBOL);
   });
+
+  it("Records registerd tokens", async () => {
+    expect(await et.registeredTokens()).to.deep.equal([ethers.BigNumber.from(eventTokenId)]);
+
+    await et.createToken(eventTokenId-1, numSlots, fractionsPerSlot, accounts[SIGNER], URI);
+    expect(await et.registeredTokens()).to.deep.equal([ethers.BigNumber.from(eventTokenId), ethers.BigNumber.from(eventTokenId - 1)]);
+  });
 });

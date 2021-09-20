@@ -13,7 +13,7 @@ contract ClaimableTokens is ERC1155, Ownable {
   mapping(uint256 => uint256) private _fractionsPerSlot;
   mapping(uint256 => uint256) private _numOfSlots;
   mapping(uint256 => string) _URIs;
-  uint256[] _registeredEventTokens;
+  uint256[] _registeredTokens;
   string _name;
   string _symbol;
 
@@ -46,7 +46,7 @@ contract ClaimableTokens is ERC1155, Ownable {
     _publicKeys[tokenId] = publicKey;
     _fractionsPerSlot[tokenId] = fractionsPerSlot;
     _URIs[tokenId] = tokenUri;
-    _registeredEventTokens.push(tokenId);
+    _registeredTokens.push(tokenId);
   }
 
   function hash(uint256 tokenId, uint256 n) public pure returns (bytes32) {
@@ -82,5 +82,9 @@ contract ClaimableTokens is ERC1155, Ownable {
 
   function symbol() public view returns (string memory) {
     return _symbol;
+  }
+
+  function registeredTokens() public view returns (uint256[] memory) {
+    return _registeredTokens;
   }
 }
