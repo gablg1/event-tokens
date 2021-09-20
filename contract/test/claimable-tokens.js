@@ -14,19 +14,21 @@ const slot = 2;
 const numSlots = 10;
 const fractionsPerSlot = 2;
 const URI = "https://foo.bar";
+const NAME = "EventTokens";
+const SYMBOL = "EVT";
 
-describe("EventTokens", () => {
+describe("ClaimableTokens", () => {
   let et, accounts, signers;
 
   before(async () => {
     // Deploy contracts
-    const etFactory = await ethers.getContractFactory('EventTokens');
+    const etFactory = await ethers.getContractFactory('ClaimableTokens');
 
     signers = await ethers.getSigners();
     accounts = signers.map(s => s.address);
 
-    et = await etFactory.deploy(accounts[SIGNER]);
-    assert.notEqual(et, undefined, "EventTokens contract instance is undefined.");
+    et = await etFactory.deploy(NAME, SYMBOL);
+    assert.notEqual(et, undefined, "ClaimableTokens contract instance is undefined.");
 
     expect(await et.totalSupply(eventTokenId)).to.equal(0);
     await et.createToken(eventTokenId, numSlots, fractionsPerSlot, accounts[SIGNER], URI);
@@ -81,7 +83,12 @@ describe("EventTokens", () => {
     expect(await et.totalSupply(eventTokenId)).to.equal(numSlots * fractionsPerSlot);
   });
 
-  it("Token URI", async () => {
+  it("Stores token URIs", async () => {
     expect(await et.uri(eventTokenId)).to.equal(URI)
+  });
+
+  it("Stores name and symbol", async () => {
+    expect(await et.name()).to.equal(NAME);
+    expect(await et.symbol()).to.equal(SYMBOL);
   });
 });

@@ -7,14 +7,19 @@ import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 
-contract EventTokens is ERC1155, Ownable {
+contract ClaimableTokens is ERC1155, Ownable {
   mapping(uint256 => address) private _publicKeys;
   mapping(uint256 => mapping (uint256 => bool)) private _claimed;
   mapping(uint256 => uint256) private _fractionsPerSlot;
   mapping(uint256 => uint256) private _numOfSlots;
-  mapping(uint256 => string) public _URIs;
+  mapping(uint256 => string) _URIs;
+  uint256[] _registeredEventTokens;
+  string _name;
+  string _symbol;
 
-  constructor(address publicKey) ERC1155("NOT_USED") {
+  constructor(string memory givenName, string memory givenSymbol) ERC1155("NOT_USED") {
+    _name = givenName;
+    _symbol = givenSymbol;
   }
 
   function claimTokenFractions(uint256 tokenId, uint256 n, bytes memory signature) public virtual {
@@ -41,6 +46,7 @@ contract EventTokens is ERC1155, Ownable {
     _publicKeys[tokenId] = publicKey;
     _fractionsPerSlot[tokenId] = fractionsPerSlot;
     _URIs[tokenId] = tokenUri;
+    _registeredEventTokens.push(tokenId);
   }
 
   function hash(uint256 tokenId, uint256 n) public pure returns (bytes32) {
@@ -54,5 +60,13 @@ contract EventTokens is ERC1155, Ownable {
 
   function uri(uint256 tokenId) public view virtual override returns (string memory) {
     return _URIs[tokenId];
+  }
+
+  function name() public view returns (string memory) {
+    return _name;
+  }
+
+  function symbol() public view returns (string memory) {
+    return _symbol;
   }
 }
