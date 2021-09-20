@@ -31,8 +31,8 @@ contract EventTokens is ERC1155, Ownable {
     _mint(msg.sender, tokenId, _fractionsPerSlot[tokenId], "");
   }
 
-  function createToken(uint256 tokenId, uint256 numOfSlots, uint256 fractionsPerSlot, address publicKey, string memory
-                       tokenUri) public virtual onlyOwner {
+  function createToken(uint256 tokenId, uint256 numOfSlots, uint256 fractionsPerSlot, address publicKey,
+                       string memory tokenUri) public virtual onlyOwner {
     require(_numOfSlots[tokenId] == 0, "Token was already created");
     require(publicKey != address(0), "Public Key must be non-zero");
     require(fractionsPerSlot * numOfSlots > 0, "Total supply must be > 0");
@@ -50,5 +50,9 @@ contract EventTokens is ERC1155, Ownable {
 
   function totalSupply(uint256 tokenId) public view returns (uint256) {
     return _numOfSlots[tokenId] * _fractionsPerSlot[tokenId];
+  }
+
+  function uri(uint256 tokenId) public view virtual override returns (string memory) {
+    return _URIs[tokenId];
   }
 }
