@@ -64,6 +64,8 @@ describe("ClaimableTokens", () => {
     expect(await et.balanceOf(accounts[3], tokenId)).to.equal(fractionsPerSlot);
 
     await expect(et.claimTokenFractions(tokenId, n, correctSignature)).to.be.revertedWith('No more fractions');
+
+    expect(await et.totalClaimed(tokenId)).to.equal(fractionsPerSlot);
   });
 
   it("Claims another token with correct signature", async () => {
@@ -77,6 +79,8 @@ describe("ClaimableTokens", () => {
     expect(await et.balanceOf(accounts[4], tokenId)).to.equal(fractionsPerSlot);
 
     await expect(et.claimTokenFractions(tokenId, n, correctSignature)).to.be.revertedWith('No more fractions');
+
+    expect(await et.totalClaimed(tokenId)).to.equal(fractionsPerSlot * 2);
   });
 
   it("Total supply works", async () => {

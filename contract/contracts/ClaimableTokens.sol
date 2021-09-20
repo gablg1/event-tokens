@@ -58,6 +58,20 @@ contract ClaimableTokens is ERC1155, Ownable {
     return _numOfSlots[tokenId] * _fractionsPerSlot[tokenId];
   }
 
+  function wasClaimed(uint256 tokenId, uint256 n) public view returns (bool) {
+    return _claimed[tokenId][n];
+  }
+
+  function totalClaimed(uint256 tokenId) public view returns (uint256) {
+    uint256 total = 0;
+    for (uint256 i = 0; i < _numOfSlots[tokenId]; i++) {
+      if (wasClaimed(tokenId, i)) {
+        total += _fractionsPerSlot[tokenId];
+      }
+    }
+    return total;
+  }
+
   function uri(uint256 tokenId) public view virtual override returns (string memory) {
     return _URIs[tokenId];
   }
