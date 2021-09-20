@@ -10,8 +10,7 @@ import IconButton from '@mui/material/IconButton';
 
 export function Claim() {
   // const { active } = useEthers();
-  const [eventCode, setEventCode] = useState('');
-  const [tokenId, setTokenId] = useState(0);
+  const [accessCode, setAccessCode] = useState('');
 
   return (
     <MainContent>
@@ -25,29 +24,17 @@ export function Claim() {
             <ContentRow>
               <InputGroup className="mb-3">
                 <InputGroup.Text>
-                  Event Code
-                  <Tooltip title="The Code Associated With Your Event">
+                  Access Code
+                  <Tooltip title="The QR code given to you at the event">
                     <IconButton>
                       <BsQuestionCircle />
                     </IconButton>
                   </Tooltip>
                 </InputGroup.Text>
                 <FormControl id="find-nft" aria-describedby="basic-addon3"
-                  onChange={(e) => setEventCode(e.target.value)}  value={eventCode || ''} />
+                  onChange={(e) => setAccessCode(e.target.value)}  value={accessCode || ''} />
               </InputGroup>
 
-              <InputGroup className="mb-3">
-                <InputGroup.Text>
-                  Token ID
-                  <Tooltip title="The Unique ID For Your NFT">
-                    <IconButton>
-                      <BsQuestionCircle />
-                    </IconButton>
-                  </Tooltip>
-                </InputGroup.Text>
-                <FormControl type="number" id="find-nft" aria-describedby="basic-addon3"
-                  onChange={(e) => setTokenId(e.target.value ? parseInt(e.target.value) : 0)}  value={tokenId} />
-              </InputGroup>
               <LoginButton>Claim</LoginButton>
 
               {/* {active && eventCode ?
