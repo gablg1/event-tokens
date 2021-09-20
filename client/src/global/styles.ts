@@ -14,6 +14,7 @@ export const Colors = {
     100: '#FFF4D4',
   },
   Red: { 400: '#F87171' },
+  Brex: { Orange: '#F46934', White: '#FFFFFF', Grey: '#737373', LightGrey: '#e0e0e0', Black: '#171717', LightOrange: '#ecb8a4' }
 }
 
 export const Fonts = {
@@ -30,7 +31,7 @@ export const Sizes = {
 }
 
 export const Gradients = {
-  bodyBackground: `linear-gradient(180deg, ${Colors.Yellow[100]}, ${Colors.White})`,
+  bodyBackground: `linear-gradient(180deg, ${Colors.Brex.LightOrange}, ${Colors.White})`,
 }
 
 export const Transitions = {

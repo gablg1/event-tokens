@@ -68,7 +68,7 @@ const TokenItem = styled.li`
   border-bottom: 1px solid transparent;
 
   & + & {
-    border-top: 1px solid ${Colors.Black[200]};
+    border-top: 1px solid ${Colors.Brex.Black};
   }
 `
 
@@ -82,7 +82,7 @@ const TokenIconContainer = styled.div`
   padding: 1px;
   font-size: 36px;
   line-height: 36px;
-  border: 1px solid ${Colors.Gray[300]};
+  border: 1px solid ${Colors.Brex.Grey};
   border-radius: 50%;
 `
 
@@ -92,7 +92,7 @@ const TokenName = styled(TextBold)`
 
 const TokenTicker = styled(TextBold)`
   grid-area: ticker;
-  color: ${Colors.Gray[600]};
+  color: ${Colors.Brex.Grey};
 `
 
 const TokenBalance = styled(TextBold)`

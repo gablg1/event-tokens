@@ -15,8 +15,8 @@ export const Button = styled.button`
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: ${Colors.Black[900]};
-  border: 1px solid ${Colors.Black[900]};
+  color: ${Colors.Brex.Black};
+  border: 1px solid ${Colors.Brex.Black};
   border-radius: ${BorderRad.m};
   background-color: transparent;
   cursor: pointer;
@@ -24,7 +24,7 @@ export const Button = styled.button`
 
   &:hover,
   &:focus {
-    background-color: ${Colors.Black[900]};
-    color: ${Colors.Yellow[100]};
+    background-color: ${Colors.Brex.Black};
+    color: ${Colors.Brex.LightOrange};
   }
 `

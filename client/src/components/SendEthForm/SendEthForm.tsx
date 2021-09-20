@@ -108,7 +108,7 @@ const Label = styled.label`
 
   &:hover,
   &:focus-within {
-    color: ${Colors.Yellow[500]};
+    color: ${Colors.Brex.Orange};
   }
 `
 
@@ -116,12 +116,12 @@ const TitleRow = styled.div`
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  border-bottom: ${Colors.Gray['300']} 1px solid;
+  border-bottom: ${Colors.Brex.LightGrey} 1px solid;
   padding: 16px;
 `
 
 const BalanceWrapper = styled.div`
-  color: ${Colors.Gray['600']};
+  color: ${Colors. Brex.Grey};
   font-size: 14px;
 `
 
@@ -157,9 +157,9 @@ const InputRow = styled.div`
   height: 44px;
   display: flex;
   margin: 0 auto;
-  color: ${Colors.Gray['600']};
+  color: ${Colors. Brex.Grey};
   align-items: center;
-  border: ${Colors.Gray['300']} 1px solid;
+  border: ${Colors. Brex.LightGrey} 1px solid;
   border-radius: ${BorderRad.m};
   overflow: hidden;
   transition: ${Transitions.all};
@@ -182,7 +182,7 @@ const SmallButton = styled(Button)`
   padding: 8px 24px;
 
   &:disabled {
-    color: ${Colors.Gray['600']};
+    color: ${Colors. Brex.Grey};
     cursor: unset;
   }
 

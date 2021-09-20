@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import { AccountModal } from './AccountModal'
 
-export const AccountButton = () => {
+ const AccountButton = () => {
   const { account, deactivate, activateBrowserWallet } = useEthers()
   const ens = useLookupAddress()
   const [showModal, setShowModal] = useState(false)
@@ -53,7 +53,7 @@ const Account = styled.div`
 `
 
 const LoginButton = styled(Button)`
-  background-color: ${Colors.Yellow[100]};
+  background-color: ${Colors.Brex.LightOrange};
 `
 
 const AccountLabel = styled(Button)`
@@ -61,6 +61,8 @@ const AccountLabel = styled(Button)`
   margin-right: -40px;
   padding-right: 40px;
   padding-left: 8px;
-  background-color: ${Colors.Yellow[100]};
+  background-color: ${Colors.Brex.LightOrange};
   font-size: 12px;
 `
+
+export { AccountButton, LoginButton }

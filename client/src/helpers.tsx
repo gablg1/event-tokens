@@ -1,6 +1,6 @@
 import { useContractCall, useContractCalls } from '@usedapp/core'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Link } from './components/base/Link'
+import { Link, InlineLink } from './components/base/Link'
 import { ShareIcon } from './components/Transactions/Icons'
 import styled from 'styled-components'
 
@@ -86,6 +86,17 @@ export const GitHubLink = (props: {style?: any}) => {
   );
 }
 
+export const InternalLink = (props: {style?: any, content: string, to: string}) => {
+  return (
+      <InlineLink href={`/${props.to}`} target="_blank" rel="noopener noreferrer">
+        {props.content}
+        <LinkIconWrapper>
+          <ShareIcon />
+        </LinkIconWrapper>
+      </InlineLink>
+  );
+}
+
 const LinkWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -94,6 +105,7 @@ const LinkWrapper = styled.div`
 `
 
 const LinkIconWrapper = styled.div`
+  display: inline-block;
   width: 12px;
   height: 12px;
 `

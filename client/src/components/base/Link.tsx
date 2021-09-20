@@ -7,12 +7,27 @@ export const Link = styled.a`
   gap: 4px;
   font-size: 12px;
   text-decoration: underline;
-  color: ${Colors.Gray['600']};
+  color: ${Colors.Brex.Grey};
   cursor: pointer;
   transition: ${Transitions.all};
 
   &:hover,
   &:focus-within {
-    color: ${Colors.Yellow[500]};
+    color: ${Colors.Brex.Orange};
+  }
+`
+export const InlineLink = styled.a`
+  display: inline-block;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  text-decoration: underline;
+  color: ${Colors.Brex.Grey};
+  cursor: pointer;
+  transition: ${Transitions.all};
+
+  &:hover,
+  &:focus-within {
+    color: ${Colors.Brex.Orange};
   }
 `

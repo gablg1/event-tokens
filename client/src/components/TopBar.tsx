@@ -14,24 +14,20 @@ export function TopBar() {
         <HeaderNav>
           { isDesktopOrLaptop &&
             <ToMain href="/">
-              <span>DoubleTrouble</span>
+              <span>Crypto Tokens</span>
               <ToMainBottom>
-                NFT <Handshaking>🤝</Handshaking> Exchange
+                Made with <EmojiSpacing>🖤</EmojiSpacing> by Brex
               </ToMainBottom>
             </ToMain>
           }
           <HeaderNavLinks>
+            <HeaderLink activeClassName="active-page" to="/claim">
+              {' '}
+              Claim your NFT{' '}
+            </HeaderLink>
             <HeaderLink activeClassName="active-page" to="/all">
               {' '}
               All NFTs{' '}
-            </HeaderLink>
-            <HeaderLink activeClassName="active-page" to="/list">
-              {' '}
-              List your NFT{' '}
-            </HeaderLink>
-            <HeaderLink activeClassName="active-page" to="/patrons">
-              {' '}
-              Patron Tokens{' '}
             </HeaderLink>
           </HeaderNavLinks>
         </HeaderNav>
@@ -47,7 +43,7 @@ const Header = styled.header`
   align-items: center;
   width: 100%;
   height: ${Sizes.headerHeight};
-  background-color: ${Colors.White};
+  background-color: ${Colors.Brex.White};
   box-shadow: ${Shadows.main};
   z-index: 100;
 `
@@ -69,7 +65,7 @@ const ToMain = styled.a`
   transition: ${Transitions.all};
 
   &:hover {
-    color: ${Colors.Yellow[500]};
+    color: ${Colors.Brex.Orange};
   }
 `
 
@@ -84,7 +80,7 @@ const ToMainBottom = styled.span`
   font-weight: 500;
 `
 
-const Handshaking = styled.span`
+const EmojiSpacing = styled.span`
   letter-spacing: -0.3em;
 `
 
@@ -121,14 +117,14 @@ const HeaderLink = styled(NavLink)`
     bottom: 0;
     width: calc(100% - 20px);
     height: 2px;
-    background-color: ${Colors.Yellow[500]};
+    background-color: ${Colors.Brex.Orange};
     transform: scaleX(0);
     transform-origin: 50% 50%;
     transition: ${Transitions.all};
   }
 
   &:hover {
-    color: ${Colors.Yellow[500]};
+    color: ${Colors.Brex.Orange};
 
     &:after {
       transform: scaleX(1);
