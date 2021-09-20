@@ -12,7 +12,7 @@ export function About() {
         <Section>
           <ContentBlock>
             <ContentRow>
-              <h1 style={{textAlign: 'center'}}>DoubleTrouble 🤝</h1>
+              <h1 style={{textAlign: 'center'}}>CryptoTokens 🖤</h1>
             </ContentRow>
             <ContentRow>
               <h2>About</h2>

@@ -14,11 +14,12 @@ export const Colors = {
     100: '#FFF4D4',
   },
   Red: { 400: '#F87171' },
-  Brex: { Orange: '#F46934', White: '#FFFFFF', Grey: '#737373', LightGrey: '#e0e0e0', Black: '#171717', LightOrange: '#ecb8a4' }
+  Brex: { Orange: '#F46A35', White: '#FFFFFF', Grey: '#737373', LightGrey: '#e0e0e0', Black: '#171717', LightOrange: '#ecb8a4' }
 }
 
 export const Fonts = {
   Helvetica: '"HelveticaNeue", sans-serif',
+  Inter: '"InterVariable",sans-serif',
 }
 
 export const Shadows = {

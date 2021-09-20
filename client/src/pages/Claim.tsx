@@ -25,7 +25,7 @@ export function Claim() {
             <ContentRow>
               <InputGroup className="mb-3">
                 <InputGroup.Text>
-                  Event Code 
+                  Event Code
                   <Tooltip title="The Code Associated With Your Event">
                     <IconButton>
                       <BsQuestionCircle />

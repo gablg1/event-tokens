@@ -8,14 +8,14 @@ export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
     scrollbar-width: none;
-    
+
     &::-webkit-scrollbar {
       display: none;
     }
   }
 
   @font-face {
-    font-family: "HelveticaNeue";
+    font-family: "InterVariable";
     src: url(${HelveticaNeue}) format('woff2');
     font-weight: 400;
     font-style: normal;
@@ -41,14 +41,14 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     background-color: ${Colors.White};
-    font-family: ${Fonts.Helvetica};
+    font-family: ${Fonts.Inter};
     font-size: 16px;
     color: ${Colors.Black[900]};
     overscroll-behavior-y: none;
   }
-  
+
   button {
-    font-family: ${Fonts.Helvetica};
+    font-family: ${Fonts.Inter};
     font-size: 1em;
     border: none;
     background-color: transparent;
@@ -76,7 +76,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     line-height: 150%;
     font-weight: 600;
-    font-family: ${Fonts.Helvetica};
+    font-family: ${Fonts.Inter};
   }
 
   h1 {
@@ -86,7 +86,7 @@ export const GlobalStyle = createGlobalStyle`
   h2 {
     font-size: 24px;
   }
-  
+
   h3 {
     font-size: 14px;
   }
