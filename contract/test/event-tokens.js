@@ -44,6 +44,12 @@ describe("EventTokens", () => {
     await expect(et.claimTokenFractions(tokenId, n, badSignature)).to.be.revertedWith('Wrong signature');
   });
 
+  it("Cannot claim token that was not created", async () => {
+    const [tokenId, n] = [eventTokenId + 1, slot];
+    const correctSignature = signers[SIGNER].signMessage(hash(tokenId, n));
+    await expect(et.claimTokenFractions(tokenId, n, correctSignature)).to.be.revertedWith('Wrong signature');
+  });
+
   it("Claims token with correct signature", async () => {
     const [tokenId, n] = [eventTokenId, slot];
     const correctSignature = signers[SIGNER].signMessage(hash(tokenId, n));
@@ -54,6 +60,6 @@ describe("EventTokens", () => {
 
     expect(await et.balanceOf(accounts[3], tokenId)).to.equal(fractionsPerSlot);
 
-
+    await expect(et.claimTokenFractions(tokenId, n, correctSignature)).to.be.revertedWith('No more fractions');
   });
 });
