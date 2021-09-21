@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useContractFunction, useEthers } from '@usedapp/core'
 import { Container, ContentBlock, ContentRow, MainContent, Section, SectionRow } from '../components/base/base'
+import ImageCard from '../components/ImageCard';
 import { AccountButton } from '../components/account/AccountButton'
 import { Subtitle, Title } from '../typography/Title'
 import { Table, InputGroup, FormControl } from 'react-bootstrap';
@@ -14,6 +15,7 @@ import ClaimableTokens from '../abi/ClaimableTokens.json'
 import { utils } from 'ethers'
 import { BigNumber } from '@ethersproject/bignumber'
 import { zeroAddr, _useContractCall, OpenSeaLink } from '../helpers';
+import { useNft } from "use-nft"
 
 export function ClaimPage(props: {eventId: number, fraction: number}) {
   const { active, account } = useEthers();
@@ -62,6 +64,9 @@ export function Claim(props: {eventId: number, fraction: number}) {
   const balance = useEtCall('balanceOf', [account, props.eventId]);
   const tokenUri = useEtCall('uri', [props.eventId]);
 
+  const { nft } = useNft(eventTokensAddr, props.eventId.toString());
+  console.log(nft);
+
   // Write to contract
   const { state: claimState, send: claimSend} = useContractFunction(etContract, 'claimTokenFractions', { transactionName: 'claimTokenFractions' })
   const claim = async () => {
@@ -74,6 +79,11 @@ export function Claim(props: {eventId: number, fraction: number}) {
 
   return (
     <>
+      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <Title>{nft && nft.name}</Title>
+        <OpenSeaLink collection={eventTokensAddr} tokenId={props.eventId} style={{width: 122, display: 'flex', flexDirection: 'column'}} />
+      </div>
+      <ImageCard style={{marginBottom: 20, maxWidth: 700}} imageURI={nft && nft.image}/>
       <Table striped bordered hover>
         <tbody>
           <tr>
@@ -85,8 +95,8 @@ export function Claim(props: {eventId: number, fraction: number}) {
             <td>{props.fraction}</td>
           </tr>
           <tr>
-            <td>Metadata URI</td>
-            <td>{tokenUri}</td>
+            <td>Description</td>
+            <td>{nft && nft.description}</td>
           </tr>
           {claimedBy && claimedBy !== zeroAddr &&
             <tr>
