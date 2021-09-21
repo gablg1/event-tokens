@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { useContractFunction, useEthers } from '@usedapp/core'
 import { Container, ContentBlock, ContentRow, MainContent, Section, SectionRow } from '../components/base/base'
 import { AccountButton } from '../components/account/AccountButton'
-import { Title } from '../typography/Title'
+import { Subtitle, Title } from '../typography/Title'
 import { Table, InputGroup, FormControl } from 'react-bootstrap';
 import { LoginButton } from "../components/account/AccountButton";
 import { BsQuestionCircle } from "react-icons/bs";
@@ -13,7 +13,7 @@ import { Contract } from '@ethersproject/contracts'
 import ClaimableTokens from '../abi/ClaimableTokens.json'
 import { utils } from 'ethers'
 import { BigNumber } from '@ethersproject/bignumber'
-import { _useContractCall, OpenSeaLink } from '../helpers';
+import { zeroAddr, _useContractCall, OpenSeaLink } from '../helpers';
 
 export function ClaimPage(props: {eventId: number, fraction: number}) {
   const { active, account } = useEthers();
@@ -62,6 +62,12 @@ export function Claim(props: {eventId: number, fraction: number}) {
   const balance = useEtCall('balanceOf', [account, props.eventId]);
   const tokenUri = useEtCall('uri', [props.eventId]);
 
+  // Write to contract
+  const { state: claimState, send: claimSend} = useContractFunction(etContract, 'claimTokenFractions', { transactionName: 'claimTokenFractions' })
+  const claim = async () => {
+    claimSend(props.eventId, props.fraction, accessCode);
+  }
+
   if (totalSupply && BigNumber.from(0).eq(totalSupply)) {
     return <div>Event Id {props.eventId} not found.</div>
   }
@@ -82,28 +88,41 @@ export function Claim(props: {eventId: number, fraction: number}) {
             <td>Metadata URI</td>
             <td>{tokenUri}</td>
           </tr>
+          {claimedBy && claimedBy !== zeroAddr &&
+            <tr>
+              <td>Claimed by</td>
+              <td>{claimedBy}</td>
+            </tr>
+          }
         </tbody>
       </Table>
-      <InputGroup className="mb-3">
-        <InputGroup.Text>
-          Access Code
-          <Tooltip title="The QR code given to you at the event">
-            <IconButton>
-              <BsQuestionCircle />
-            </IconButton>
-          </Tooltip>
-        </InputGroup.Text>
-        <FormControl id="find-nft" aria-describedby="basic-addon3"
-          onChange={(e) => setAccessCode(e.target.value)}  value={accessCode || ''} />
-      </InputGroup>
+      {balance && balance.gt(BigNumber.from(0)) &&
+        <Subtitle style={{color: "green"}}>You own {balance.toString()} fractions of this NFT.</Subtitle>
+      }
+      {claimedBy === zeroAddr &&
+        <>
+          <InputGroup className="mb-3">
+            <InputGroup.Text>
+              Access Code
+              <Tooltip title="The QR code given to you at the event">
+                <IconButton>
+                  <BsQuestionCircle />
+                </IconButton>
+              </Tooltip>
+            </InputGroup.Text>
+            <FormControl id="find-nft" aria-describedby="basic-addon3"
+              onChange={(e) => setAccessCode(e.target.value)}  value={accessCode || ''} />
+          </InputGroup>
 
-      <LoginButton>Claim</LoginButton>
-          {/* {active && eventCode ?
-            (utils.isAddress(eventCode)
-              ? <NFTViewer collection={eventCode} tokenId={tokenId} />
-              : <Text>Address {eventCode} is invalid</Text>
-            )
-          : ''} */}
+        {claimState.status === 'Mining'
+          ? <div>Mining transaction...</div>
+          : <LoginButton onClick={claim}>Claim Fraction</LoginButton>
+        }
+      </>
+      }
+      {claimState && claimState.errorMessage && claimState.errorMessage.search("Wrong signature") &&
+          <div style={{color: "red"}}>Wrong access code</div>
+      }
     </>
 
   )
