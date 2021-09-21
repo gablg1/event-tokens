@@ -15,6 +15,15 @@ import { utils } from 'ethers'
 import { BigNumber } from '@ethersproject/bignumber'
 import { _useContractCall, OpenSeaLink } from '../helpers';
 
+const hash = (tokenId, n) => {
+  return utils.arrayify(utils.keccak256(utils.defaultAbiCoder.encode(["uint256", "uint256"], [tokenId, n])));
+}
+
+
+const sign = async (ethers, tokenId, n) => {
+  return await ethers.getSigner().signMessage(hash(tokenId, n));
+}
+
 export function CreateEvent() {
   const { active, account } = useEthers();
   return (
@@ -54,7 +63,11 @@ function InnerCreateEvent() {
   };
 
   // Local state
-  const [accessCode, setAccessCode] = useState('');
+  const [eventId, setEventId] = useState('');
+  const [numOfSlots, setNumOfSlots] = useState('');
+  const [fractions, setFractions] = useState('');
+  const intNumOfSlots = parseInt(numOfSlots);
+  const intEventId = parseInt(eventId);
 
   // Read from contract
   const registeredTokens = useEtCall('registeredTokens', []);
@@ -66,22 +79,33 @@ function InnerCreateEvent() {
     return <div>You are not the owner.</div>
   }
 
+  const createEvent = () => {
+
+  }
+
+  const downloadSignatures = async () => {
+    const rows = await Promise.all(_.range(intNumOfSlots).map(async (i) => {
+      const signature = await sign(library, intEventId, i);
+      return [intEventId, i, signature];
+    }));
+    console.log(rows);
+
+    let csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
+    var encodedUri = encodeURI(csvContent);
+    window.open(encodedUri);
+  }
+
   return (
     <>
-      <InputGroup className="mb-3">
-        <InputGroup.Text>
-          Access Code
-          <Tooltip title="The QR code given to you at the event">
-            <IconButton>
-              <BsQuestionCircle />
-            </IconButton>
-          </Tooltip>
-        </InputGroup.Text>
-        <FormControl id="find-nft" aria-describedby="basic-addon3"
-          onChange={(e) => setAccessCode(e.target.value)}  value={accessCode || ''} />
-      </InputGroup>
+      <TextInput name="Event ID" description="Choose an ID for your event (can't be repeated)"
+        value={eventId || ''} onChange={(e) => setEventId(e.target.value)} />
+      <TextInput name="Number of slots" description="How many people will be able to claim a token"
+        value={numOfSlots || ''} onChange={(e) => setNumOfSlots(e.target.value)} />
+      <TextInput name="Fractions per slot" description="Number of tokens we'll give to each person"
+        value={fractions || ''} onChange={(e) => setFractions(e.target.value)} />
 
-      <LoginButton>Claim</LoginButton>
+      <LoginButton onClick={createEvent}>Create Event</LoginButton>
+      <LoginButton style={{paddingLeft: 10, paddingRight: 10}} onClick={downloadSignatures}>Download Signatures CSV</LoginButton>
           {/* {active && eventCode ?
             (utils.isAddress(eventCode)
               ? <NFTViewer collection={eventCode} tokenId={tokenId} />
@@ -94,3 +118,19 @@ function InnerCreateEvent() {
 }
 
 
+function TextInput(props: {name: string, description: string, value: string, onChange: any}) {
+  return (
+    <InputGroup className="mb-3">
+      <InputGroup.Text>
+        {props.name}
+        <Tooltip title={props.description}>
+          <IconButton>
+            <BsQuestionCircle />
+          </IconButton>
+        </Tooltip>
+      </InputGroup.Text>
+      <FormControl id="find-nft" aria-describedby="basic-addon3"
+        onChange={props.onChange}  value={props.value} />
+    </InputGroup>
+  );
+}
