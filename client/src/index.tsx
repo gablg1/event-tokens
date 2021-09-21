@@ -22,6 +22,12 @@ const chains = {
     name: 'Ethereum',
     eventTokensAddr: '0xbeefdead',
   },
+
+  // Polygon Mainnet
+  "137": {
+    name: 'Polygon',
+    eventTokensAddr: '0xd1ffBb04d12AA6003Bb9ee9b53468049497e3f0f',
+  },
   // Hardhat local
   "31337": {
     name: 'Hardhat',
@@ -31,7 +37,7 @@ const chains = {
 
 function WrappedApp() {
   const { library } = useEthers();
-  const chainId = '31337' // FIXME
+  const chainId = '137' // FIXME
   return  (
     <CryptoTokensContext.Provider value={{
       eventTokensAddr: (chains[chainId].eventTokensAddr ?? ''),
