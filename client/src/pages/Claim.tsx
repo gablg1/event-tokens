@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useContractFunction, useEthers } from '@usedapp/core'
 import { Container, ContentBlock, ContentRow, MainContent, Section, SectionRow } from '../components/base/base'
 import ImageCard from '../components/ImageCard';
@@ -16,6 +16,7 @@ import { utils } from 'ethers'
 import { BigNumber } from '@ethersproject/bignumber'
 import { zeroAddr, _useContractCall, OpenSeaLink } from '../helpers';
 import { useNft } from "use-nft"
+import { useLocation, useHistory } from 'react-router-dom'
 
 export function ClaimPage(props: {eventId: number, fraction: number}) {
   const { active, account } = useEthers();
@@ -57,6 +58,8 @@ export function Claim(props: {eventId: number, fraction: number}) {
 
   // Local state
   const [accessCode, setAccessCode] = useState('');
+  const history = useHistory();
+  const location = useLocation();
 
   // Read from contract
   const totalSupply = useEtCall('totalSupply', [props.eventId]);
@@ -72,6 +75,16 @@ export function Claim(props: {eventId: number, fraction: number}) {
   const claim = async () => {
     claimSend(props.eventId, props.fraction, accessCode);
   }
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search)
+
+    if (queryParams.has('code')) {
+      setAccessCode(queryParams.get('code'))
+      queryParams.delete('code')
+      history.replace({search: queryParams.toString()})
+    }
+  }, [])
 
   if (totalSupply && BigNumber.from(0).eq(totalSupply)) {
     return <div>Event Id {props.eventId} not found.</div>
