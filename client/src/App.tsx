@@ -6,6 +6,7 @@ import { TopBar } from './components/TopBar'
 import { GlobalStyle } from './global/GlobalStyle'
 import { About } from './pages/About'
 import { ClaimPage } from './pages/Claim'
+import { CreateEvent } from './pages/CreateEvent'
 import { All } from './pages/All'
 import { ViewNFT } from './pages/ViewNFT'
 import { NotificationsList } from './components/Transactions/History'
@@ -24,6 +25,7 @@ export function App() {
           }} />
           <Route exact path="/" component={About} />
           <Route exact path="/all" component={All} />
+          <Route exact path="/create" component={CreateEvent} />
           <Redirect exact from="/" to="/about" />
         </Switch>
       </BrowserRouter>
