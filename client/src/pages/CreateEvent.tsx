@@ -66,21 +66,24 @@ function InnerCreateEvent() {
   const [eventId, setEventId] = useState('');
   const [numOfSlots, setNumOfSlots] = useState('');
   const [fractions, setFractions] = useState('');
+  const [publicKey, setPublicKey] = useState('');
+  const [uri, setUri] = useState('');
+
   const intNumOfSlots = parseInt(numOfSlots);
   const intEventId = parseInt(eventId);
+  const intFractions = parseInt(fractions);
+
 
   // Read from contract
   const registeredTokens = useEtCall('registeredTokens', []);
   console.log(registeredTokens);
   const owner = useEtCall('owner', []);
 
-  if (owner && owner !== account) {
-    console.log(owner);
-    return <div>You are not the owner.</div>
-  }
 
-  const createEvent = () => {
-
+  // Write to contract
+  const { state: createState, send: createSend} = useContractFunction(etContract, 'createToken', { transactionName: 'createToken' })
+  const createEvent = async () => {
+    createSend(intEventId, intNumOfSlots, intFractions, publicKey, uri);
   }
 
   const downloadSignatures = async () => {
@@ -95,6 +98,15 @@ function InnerCreateEvent() {
     window.open(encodedUri);
   }
 
+  if (!owner) {
+    return <div>Loading contract {eventTokensAddr}...</div>;
+  }
+
+  if (owner !== account) {
+    console.log(owner);
+    return <div>You are not the owner.</div>;
+  }
+
   return (
     <>
       <TextInput name="Event ID" description="Choose an ID for your event (can't be repeated)"
@@ -103,6 +115,10 @@ function InnerCreateEvent() {
         value={numOfSlots || ''} onChange={(e) => setNumOfSlots(e.target.value)} />
       <TextInput name="Fractions per slot" description="Number of tokens we'll give to each person"
         value={fractions || ''} onChange={(e) => setFractions(e.target.value)} />
+      <TextInput name="Public Key" description="Public Key corresponding to the Private key used to create claimable signatures for this event"
+        value={publicKey || ''} onChange={(e) => setPublicKey(e.target.value)} />
+      <TextInput name="Metadata URI" description="URI pointing to NFT metadata"
+        value={uri || ''} onChange={(e) => setUri(e.target.value)} />
 
       <LoginButton onClick={createEvent}>Create Event</LoginButton>
       <LoginButton style={{paddingLeft: 10, paddingRight: 10}} onClick={downloadSignatures}>Download Signatures CSV</LoginButton>

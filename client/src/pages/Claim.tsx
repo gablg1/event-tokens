@@ -60,6 +60,7 @@ export function Claim(props: {eventId: number, fraction: number}) {
   const totalSupply = useEtCall('totalSupply', [props.eventId]);
   const claimedBy = useEtCall('claimedBy', [props.eventId, props.fraction]);
   const balance = useEtCall('balanceOf', [account, props.eventId]);
+  const tokenUri = useEtCall('uri', [props.eventId]);
 
   if (totalSupply && BigNumber.from(0).eq(totalSupply)) {
     return <div>Event Id {props.eventId} not found.</div>
@@ -76,6 +77,10 @@ export function Claim(props: {eventId: number, fraction: number}) {
           <tr>
             <td>Fraction #</td>
             <td>{props.fraction}</td>
+          </tr>
+          <tr>
+            <td>Metadata URI</td>
+            <td>{tokenUri}</td>
           </tr>
         </tbody>
       </Table>
