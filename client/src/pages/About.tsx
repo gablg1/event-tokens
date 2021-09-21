@@ -2,10 +2,10 @@ import React, {useContext} from 'react'
 import { Container, ContentBlock, ContentRow, MainContent, Section } from '../components/base/base'
 import { Text, } from '../typography/Text'
 import { GitHubLink, EtherscanContractLink, InternalLink } from '../helpers'
-import { DoubleTroubleContext } from '../DoubleTrouble';
+import { CryptoTokensContext } from '../CryptoTokens';
 
 export function About() {
-  const { dtAddr } = useContext(DoubleTroubleContext);
+  const { dtAddr } = useContext(CryptoTokensContext);
   return (
     <MainContent>
       <Container>

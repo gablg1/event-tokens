@@ -16,8 +16,8 @@ async function main() {
   const deployer = signers[0];
   console.log("Deploying the contracts with the account:", await deployer.getAddress());
 
-  const etFactory = await ethers.getContractFactory('EventTokens');
-  const et = await etFactory.deploy();
+  const etFactory = await ethers.getContractFactory('ClaimableTokens');
+  const et = await etFactory.deploy("Event Tokens", "EVT");
 
   console.log("Event Tokens address:", et.address);
 }

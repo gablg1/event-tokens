@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { useEthers, ChainId, DAppProvider } from '@usedapp/core'
 import { App } from './App'
-import { DoubleTroubleContext } from './DoubleTrouble'
+import { CryptoTokensContext } from './CryptoTokens'
 import { NftProvider } from "use-nft"
 
 const config = {
@@ -20,31 +20,28 @@ const chains = {
   // Ethereum Mainnet
   "1": {
     name: 'Ethereum',
-    dtAddr: "0x4C2Bc0d85D42C2Ed65BDd40C78A7b71A5b412648",
-    patronTokensAddr: '0xD8fb428BcE0A7176912869EC169eFd4cEf51335d',
+    eventTokensAddr: '0xbeefdead',
   },
   // Hardhat local
   "31337": {
     name: 'Hardhat',
-    dtAddr: process.env.REACT_APP_DT_ADDR,
-    patronTokensAddr: process.env.REACT_APP_PT_ADDR,
+    eventTokensAddr: process.env.REACT_APP_ET_ADDR,
   }
 }
 
 function WrappedApp() {
   const { library } = useEthers();
-  const chainId = '1' // FIXME
+  const chainId = '31337' // FIXME
   return  (
-    <DoubleTroubleContext.Provider value={{
-      dtAddr: (chains[chainId].dtAddr ?? ''),
-      patronTokensAddr: (chains[chainId].patronTokensAddr ?? ''),
+    <CryptoTokensContext.Provider value={{
+      eventTokensAddr: (chains[chainId].eventTokensAddr ?? ''),
     }}>
       <NftProvider fetcher={["ethers", {provider: library}]} jsonProxy={(url) =>
         `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
       }>
         <App />
       </NftProvider>
-    </DoubleTroubleContext.Provider>
+    </CryptoTokensContext.Provider>
   );
 }
 

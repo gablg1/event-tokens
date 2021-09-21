@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 contract ClaimableTokens is ERC1155, Ownable {
   mapping(uint256 => address) private _publicKeys;
-  mapping(uint256 => mapping (uint256 => bool)) private _claimed;
+  mapping(uint256 => mapping (uint256 => address)) private _claimedBy;
   mapping(uint256 => uint256) private _fractionsPerSlot;
   mapping(uint256 => uint256) private _numOfSlots;
   mapping(uint256 => string) _URIs;
@@ -30,8 +30,8 @@ contract ClaimableTokens is ERC1155, Ownable {
     );
     require(_fractionsPerSlot[tokenId] > 0, "Invalid tokenId (nonexistent)");
     require(n < _numOfSlots[tokenId], "Invalid n");
-    require(!_claimed[tokenId][n], "No more fractions available to claim");
-    _claimed[tokenId][n] = true;
+    require(_claimedBy[tokenId][n] == address(0), "No more fractions available to claim");
+    _claimedBy[tokenId][n] = msg.sender;
 
     _mint(msg.sender, tokenId, _fractionsPerSlot[tokenId], "");
   }
@@ -58,14 +58,14 @@ contract ClaimableTokens is ERC1155, Ownable {
     return _numOfSlots[tokenId] * _fractionsPerSlot[tokenId];
   }
 
-  function wasClaimed(uint256 tokenId, uint256 n) public view returns (bool) {
-    return _claimed[tokenId][n];
+  function claimedBy(uint256 tokenId, uint256 n) public view returns (address) {
+    return _claimedBy[tokenId][n];
   }
 
   function totalClaimed(uint256 tokenId) public view returns (uint256) {
     uint256 total = 0;
     for (uint256 i = 0; i < _numOfSlots[tokenId]; i++) {
-      if (wasClaimed(tokenId, i)) {
+      if (claimedBy(tokenId, i) != address(0)) {
         total += _fractionsPerSlot[tokenId];
       }
     }

@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { AccountButton } from '../components/account/AccountButton'
 import { useEthers } from '@usedapp/core'
 import { truncAddr, OpenSeaLink, _useContractCall, _useContractCalls, effectiveNFTPrice } from '../helpers';
-import { DoubleTroubleContext } from '../DoubleTrouble';
+import { CryptoTokensContext } from '../CryptoTokens';
 import DoubleTroubleContract from '../abi/DoubleTrouble.json'
 import GenericNFTContract from '../abi/IERC721Metadata.json'
 import { Link } from '../components/base/Link'
@@ -16,7 +16,7 @@ import { Link } from '../components/base/Link'
 
 export function All() {
   const { account } = useEthers();
-  const { dtAddr } = useContext(DoubleTroubleContext);
+  const { dtAddr } = useContext(CryptoTokensContext);
 
   const useDTCall = (method: string, args: any[]) => {
     return _useContractCall({
