@@ -19,7 +19,8 @@ import { useNft } from "use-nft"
 import { useLocation, useHistory } from 'react-router-dom'
 
 export function ClaimPage(props: {eventId: number, fraction: number}) {
-  const { active, } = useEthers();
+  const { active, chainId } = useEthers();
+  console.log(chainId);
   return (
     <MainContent>
       <Container>
@@ -30,8 +31,11 @@ export function ClaimPage(props: {eventId: number, fraction: number}) {
           </SectionRow>
           <ContentBlock>
             <ContentRow>
-              {active &&
+              {active && chainId == '1' &&
                 <Claim eventId={props.eventId} fraction={props.fraction} />
+              }
+              {active && chainId != '1' &&
+                  <div>Please connect your wallet to the Ethereum Mainnet. You're currently connected to a network with Chain ID {chainId}</div>
               }
             </ContentRow>
           </ContentBlock>
