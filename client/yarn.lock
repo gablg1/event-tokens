@@ -10297,6 +10297,14 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-qr-code@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/react-qr-code/-/react-qr-code-2.0.2.tgz#64107c869079aceb897c97496d163720ab2820e8"
+  integrity sha512-73VGe81MgeE5FJNFgdY42ez/wPPJTHuooU3iE4CX+6F8M88O1Gg4zNA0L4bKEpoySQ0QjqreJgyXjFrG/QfsdA==
+  dependencies:
+    prop-types "^15.7.2"
+    qr.js "0.0.0"
+
 react-refresh@^0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"

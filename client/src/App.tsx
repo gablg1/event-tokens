@@ -6,6 +6,7 @@ import { TopBar } from './components/TopBar'
 import { GlobalStyle } from './global/GlobalStyle'
 import { About } from './pages/About'
 import { ClaimPage } from './pages/Claim'
+import { QRCodes } from './pages/QRCodes'
 import { CreateEvent } from './pages/CreateEvent'
 import { All } from './pages/All'
 import { NotificationsList } from './components/Transactions/History'
@@ -14,15 +15,20 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 export function App() {
   return (
     <BrowserRouter>
-    <Switch>
-      <Route path="/claim-raw/:eventId/:fraction" render={({match}) => {
-        return (
-          <ClaimPage eventId={match.params.eventId} fraction={parseInt(match.params.fraction)} />
-        );
-      }} />
-      <Route component={StandaloneApp} />
-    </Switch>
-  </BrowserRouter>
+      <Switch>
+        <Route path="/claim-raw/:eventId/:fraction" render={({match}) => {
+          return (
+            <ClaimPage eventId={match.params.eventId} fraction={parseInt(match.params.fraction)} />
+          );
+        }} />
+        <Route path="/qrcodes/:eventId/:numOfSlots" render={({match}) => {
+          return (
+            <QRCodes eventId={match.params.eventId} numOfSlots={parseInt(match.params.numOfSlots)} />
+          );
+        }} />
+        <Route component={StandaloneApp} />
+      </Switch>
+    </BrowserRouter>
   )
 }
 
