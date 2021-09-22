@@ -3,7 +3,7 @@ import { useContractFunction, useEthers } from '@usedapp/core'
 import { Container, ContentBlock, ContentRow, MainContent, Section, SectionRow } from '../components/base/base'
 import { AccountButton } from '../components/account/AccountButton'
 import { Title } from '../typography/Title'
-import { Table, InputGroup, FormControl } from 'react-bootstrap';
+import { InputGroup, FormControl } from 'react-bootstrap';
 import { LoginButton } from "../components/account/AccountButton";
 import { BsQuestionCircle } from "react-icons/bs";
 import { Tooltip } from '@mui/material';
@@ -12,8 +12,7 @@ import { CryptoTokensContext } from '../CryptoTokens';
 import { Contract } from '@ethersproject/contracts'
 import ClaimableTokens from '../abi/ClaimableTokens.json'
 import { utils } from 'ethers'
-import { BigNumber } from '@ethersproject/bignumber'
-import { _useContractCall, OpenSeaLink } from '../helpers';
+import { _useContractCall, } from '../helpers';
 
 const hash = (tokenId, n) => {
   return utils.arrayify(utils.keccak256(utils.defaultAbiCoder.encode(["uint256", "uint256"], [tokenId, n])));
@@ -49,7 +48,7 @@ export function CreateEvent() {
 
 
 function InnerCreateEvent() {
-  const { chainId, active, account, library, } = useEthers();
+  const { account, library, } = useEthers();
   const { eventTokensAddr } = useContext(CryptoTokensContext);
 
   const etContract = new Contract(eventTokensAddr, new utils.Interface(ClaimableTokens.abi), library);
@@ -81,7 +80,7 @@ function InnerCreateEvent() {
 
 
   // Write to contract
-  const { state: createState, send: createSend} = useContractFunction(etContract, 'createToken', { transactionName: 'createToken' })
+  const { send: createSend} = useContractFunction(etContract, 'createToken', { transactionName: 'createToken' })
   const createEvent = async () => {
     createSend(intEventId, intNumOfSlots, intFractions, publicKey, uri);
   }

@@ -19,7 +19,6 @@ import { useNft } from "use-nft"
 import { useLocation, useHistory } from 'react-router-dom'
 
 export function ClaimPage(props: {eventId: number, fraction: number}) {
-  const { active, account } = useEthers();
   return (
     <MainContent>
       <Container>
@@ -30,9 +29,7 @@ export function ClaimPage(props: {eventId: number, fraction: number}) {
           </SectionRow>
           <ContentBlock>
             <ContentRow>
-            {active && account &&
               <Claim eventId={props.eventId} fraction={props.fraction} />
-            }
             </ContentRow>
           </ContentBlock>
         </Section>
@@ -43,7 +40,7 @@ export function ClaimPage(props: {eventId: number, fraction: number}) {
 
 
 export function Claim(props: {eventId: number, fraction: number}) {
-  const { chainId, active, account, library, } = useEthers();
+  const { account, library, } = useEthers();
   const { eventTokensAddr } = useContext(CryptoTokensContext);
 
   const etContract = new Contract(eventTokensAddr, new utils.Interface(ClaimableTokens.abi), library);
@@ -65,10 +62,8 @@ export function Claim(props: {eventId: number, fraction: number}) {
   const totalSupply = useEtCall('totalSupply', [props.eventId]);
   const claimedBy = useEtCall('claimedBy', [props.eventId, props.fraction]);
   const balance = useEtCall('balanceOf', [account, props.eventId]);
-  const tokenUri = useEtCall('uri', [props.eventId]);
 
   const { nft } = useNft(eventTokensAddr, props.eventId.toString());
-  console.log(nft);
 
   // Write to contract
   const { state: claimState, send: claimSend} = useContractFunction(etContract, 'claimTokenFractions', { transactionName: 'claimTokenFractions' })
@@ -84,7 +79,7 @@ export function Claim(props: {eventId: number, fraction: number}) {
       queryParams.delete('accessCode')
       history.replace({search: queryParams.toString()})
     }
-  }, [])
+  }, [location, history])
 
   if (totalSupply && BigNumber.from(0).eq(totalSupply)) {
     return <div>Event Id {props.eventId} not found.</div>

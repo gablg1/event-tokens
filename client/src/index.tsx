@@ -20,7 +20,7 @@ const chains = {
   // Ethereum Mainnet
   "1": {
     name: 'Ethereum',
-    eventTokensAddr: '0xbeefdead',
+    eventTokensAddr: '0x97857b2020326a954cea75ff5d1e2d1045fde3c4',
   },
 
   // Polygon Mainnet
@@ -37,7 +37,7 @@ const chains = {
 
 function WrappedApp() {
   const { library } = useEthers();
-  const chainId = '137' // FIXME
+  const chainId = '1'
   return  (
     <CryptoTokensContext.Provider value={{
       eventTokensAddr: (chains[chainId].eventTokensAddr ?? ''),
