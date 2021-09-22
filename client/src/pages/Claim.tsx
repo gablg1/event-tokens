@@ -79,9 +79,9 @@ export function Claim(props: {eventId: number, fraction: number}) {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
 
-    if (queryParams.has('code')) {
-      setAccessCode(queryParams.get('code'))
-      queryParams.delete('code')
+    if (queryParams.has('accessCode')) {
+      setAccessCode(queryParams.get('accessCode'))
+      queryParams.delete('accessCode')
       history.replace({search: queryParams.toString()})
     }
   }, [])

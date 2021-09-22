@@ -14,9 +14,23 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 export function App() {
   return (
+    <BrowserRouter>
+    <Switch>
+      <Route path="/claim-raw/:eventId/:fraction" render={({match}) => {
+        return (
+          <ClaimPage eventId={match.params.eventId} fraction={parseInt(match.params.fraction)} />
+        );
+      }} />
+      <Route component={StandaloneApp} />
+    </Switch>
+  </BrowserRouter>
+  )
+}
+
+export function StandaloneApp() {
+  return (
     <Page>
       <GlobalStyle />
-      <BrowserRouter>
         <TopBar />
         <Switch>
           <Route path="/claim/:eventId/:fraction" render={({match}) => {
@@ -29,8 +43,7 @@ export function App() {
           <Route exact path="/create" component={CreateEvent} />
           <Redirect exact from="/" to="/about" />
         </Switch>
-      </BrowserRouter>
       <NotificationsList />
     </Page>
-  )
+  );
 }
