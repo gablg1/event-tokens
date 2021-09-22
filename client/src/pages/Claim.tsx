@@ -163,13 +163,13 @@ export function Claim(props: {eventId: number, fraction: number}) {
           </>
         : <div style={{marginTop: 20}}>Owning a single XERB token gives you access to the exclusive <a style={{textDecoration: 'underline'}} href="https://discord.gg/xwDhVYCQvN">Xerb Club Discord</a>.</div>
       }
-      {claimedBy === zeroAddr && !account &&
+      {(!claimedBy || (claimedBy === zeroAddr && !account)) &&
         <div>
           <div style={{marginTop: 40, fontWeight: 'bold'}}>Please connect your Crypto wallet to claim this token.</div> 
           If you don't have a Crypto Wallet yet, check out <a href="https://wallet.coinbase.com/">Coinbase Wallet</a> or <a href="https://metamask.io/">Metamask</a>
         </div>
       }
-      {claimedBy !== zeroAddr && !account &&
+      {claimedBy && claimedBy !== zeroAddr && !account &&
         <div style={{marginTop: 40}}>This fraction was already claimed by {claimedBy}.</div>
       }
     </>
