@@ -79,8 +79,10 @@ export function Claim(props: {eventId: number, fraction: number}) {
 
     if (queryParams.has('accessCode')) {
       setAccessCode(queryParams.get('accessCode'))
+      /* Leave param there for now
       queryParams.delete('accessCode')
       history.replace({search: queryParams.toString()})
+      */
     }
   }, [location, history])
 
