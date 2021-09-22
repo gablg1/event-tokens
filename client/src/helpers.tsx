@@ -76,7 +76,7 @@ export const EtherscanContractLink = (props: {style?: any, contract: string}) =>
 export const GitHubLink = (props: {style?: any}) => {
   return (
     <LinkWrapper style={props.style}>
-      <Link href={`https://github.com/laurafiuza/double-trouble`} target="_blank" rel="noopener noreferrer">
+      <Link href={`https://github.com/gablg1/event-tokens`} target="_blank" rel="noopener noreferrer">
         View Project on GitHub
         <LinkIconWrapper>
           <ShareIcon />
