@@ -102,16 +102,22 @@ export function Claim(props: {eventId: number, fraction: number}) {
             <td>{props.eventId}</td>
           </tr>
           <tr>
-            <td>Fraction #</td>
+            <td>Fraction ID</td>
             <td>{props.fraction}</td>
           </tr>
           <tr>
             <td>Description</td>
             <td>{nft && nft.description}</td>
           </tr>
+          {totalSupply &&
+            <tr>
+              <td>Total fractions minted</td>
+              <td>{totalSupply.toString()}</td>
+            </tr>
+          }
           {claimedBy && claimedBy !== zeroAddr &&
             <tr>
-              <td>Claimed by</td>
+              <td>Fraction claimed by</td>
               <td>{claimedBy}</td>
             </tr>
           }
