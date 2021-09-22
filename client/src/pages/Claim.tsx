@@ -63,6 +63,7 @@ export function Claim(props: {eventId: number, fraction: number}) {
 
   // Read from contract
   const totalSupply = useEtCall('totalSupply', [props.eventId]);
+  const totalClaimed = useEtCall('totalClaimed', [props.eventId]);
   const claimedBy = useEtCall('claimedBy', [props.eventId, props.fraction]);
   const balance = useEtCall('balanceOf', [account, props.eventId]);
 
@@ -115,6 +116,12 @@ export function Claim(props: {eventId: number, fraction: number}) {
             <tr>
               <td>Total fractions minted</td>
               <td>{totalSupply.toString()}</td>
+            </tr>
+          }
+          {totalClaimed&&
+            <tr>
+              <td>Total fractions claimed</td>
+              <td>{totalClaimed.toString()}</td>
             </tr>
           }
           {claimedBy && claimedBy !== zeroAddr &&
