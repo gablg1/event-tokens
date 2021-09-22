@@ -5,7 +5,7 @@ import { CryptoTokensContext } from '../CryptoTokens';
 
 
 export function Landing () {
-  const { dtAddr } = useContext(CryptoTokensContext);
+  const { eventTokensAddr } = useContext(CryptoTokensContext);
   return (
     <MainContent>
       <Container>
@@ -20,9 +20,9 @@ export function Landing () {
 
                 <div style={{marginBottom: 20}}>Tomorrow you will receive an email with a unique link to claim this NFT. This will give you exclusive access to our Discord channel where you can share ideas, reconnect, and access photos taken at the booth today.</div>
 
-                <div>So great to see you back IRL.</div>
+                <div style={{marginBottom: 35}}>So great to see you back IRL.</div>
 
-                <EtherscanContractLink style={{position: 'absolute', bottom: 40, right: 20}} contract={dtAddr} />
+                <EtherscanContractLink style={{position: 'absolute', bottom: 40, right: 20}} contract={eventTokensAddr} />
                 <GitHubLink style={{ position: 'absolute', bottom: 20, right: 20}} />
               </div>
             </ContentRow>
