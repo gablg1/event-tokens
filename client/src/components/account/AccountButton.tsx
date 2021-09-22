@@ -34,7 +34,7 @@ import { AccountModal } from './AccountModal'
           <LoginButton onClick={() => deactivate()}>Disconnect</LoginButton>
         </>
       ) : (
-        <LoginButton onClick={activate}>Connect</LoginButton>
+        <LoginButton style={{paddingLeft: 10, paddingRight: 10}} onClick={activate}>Connect Wallet</LoginButton>
       )}
     </Account>
   )

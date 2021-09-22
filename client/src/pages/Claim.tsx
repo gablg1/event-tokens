@@ -25,7 +25,7 @@ export function ClaimPage(props: {eventId: number, fraction: number}) {
       <Container>
         <Section>
           <SectionRow>
-            <Title> </Title>
+            <Title>Claim NFT</Title>
             <AccountButton />
           </SectionRow>
           <ContentBlock>
@@ -117,10 +117,7 @@ export function Claim(props: {eventId: number, fraction: number}) {
           }
         </tbody>
       </Table>
-      {balance && balance.gt(BigNumber.from(0)) &&
-        <Subtitle style={{color: "green"}}>You own {balance.toString()} fractions of this NFT.</Subtitle>
-      }
-      {claimedBy === zeroAddr &&
+      {claimedBy === zeroAddr && account &&
         <>
           <InputGroup className="mb-3">
             <InputGroup.Text>
@@ -143,6 +140,22 @@ export function Claim(props: {eventId: number, fraction: number}) {
       }
       {claimState && claimState.errorMessage && claimState.errorMessage.search("Wrong signature") &&
           <div style={{color: "red"}}>Wrong access code</div>
+      }
+      {(balance && balance.gt(BigNumber.from(0)))
+        ? <>
+            <Subtitle style={{color: "green"}}>You own {balance.toString()} fraction{balance.gt(BigNumber.from(1)) ? 's' : ''} of this NFT.</Subtitle>
+            <div>You can now join our members-only <a style={{textDecoration: 'underline'}} href="https://discord.gg/xwDhVYCQvN">XERB Club Discord</a>.</div>
+          </>
+        : <div style={{marginTop: 20}}>Owning a single XERB token gives you access to the exclusive <a style={{textDecoration: 'underline'}} href="https://discord.gg/xwDhVYCQvN">Xerb Club Discord</a>.</div>
+      }
+      {claimedBy === zeroAddr && !account &&
+        <div>
+          <div style={{marginTop: 40, fontWeight: 'bold'}}>Please connect your Crypto wallet to claim this token.</div> 
+          If you don't have a Crypto Wallet yet, check out <a href="https://wallet.coinbase.com/">Coinbase Wallet</a> or <a href="https://metamask.io/">Metamask</a>
+        </div>
+      }
+      {claimedBy !== zeroAddr && !account &&
+        <div style={{marginTop: 40}}>This fraction was already claimed by {claimedBy}.</div>
       }
     </>
 
