@@ -39,6 +39,7 @@ export function QRCodes(props: {eventId: number, numOfSlots: number}) {
       const url = `https://crypto-tokens.netlify.app/claim-raw/${eventId}/${fraction}?accessCode=${signature}`;
       return (
         <div style={{margin: 50}}>
+          <a href={url}>{url}</a>
           <QRCode value={url} size={200} />
         </div>
       );
