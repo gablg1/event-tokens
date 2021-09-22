@@ -19,7 +19,7 @@ import { useNft } from "use-nft"
 import { useLocation, useHistory } from 'react-router-dom'
 
 export function ClaimPage(props: {eventId: number, fraction: number}) {
-  const { account, active, } = useEthers();
+  const { active, } = useEthers();
   return (
     <MainContent>
       <Container>
