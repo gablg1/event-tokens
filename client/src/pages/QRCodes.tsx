@@ -18,9 +18,9 @@ const sign = async (signer, tokenId, n) => {
 export function QRCodes(props: {eventId: number, numOfSlots: number}) {
   const [rows, setRows] = useState([]);
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search)
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search)
     const wallet = new Wallet(queryParams.get('key'));
     async function getSignatures() {
       const rows = await Promise.all(_.range(props.numOfSlots).map(async (i) => {
@@ -31,7 +31,7 @@ export function QRCodes(props: {eventId: number, numOfSlots: number}) {
     }
 
     getSignatures();
-  }, [queryParams.get('key')]);
+  }, [props.numOfSlots, props.eventId, location.search]);
 
   return (
     <>
