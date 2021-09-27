@@ -4,11 +4,10 @@ import { BrowserRouter } from 'react-router-dom'
 import { Page } from './components/base/base'
 import { TopBar } from './components/TopBar'
 import { GlobalStyle } from './global/GlobalStyle'
-import { Landing } from './pages/Landing'
 import { ClaimPage } from './pages/Claim'
 import { QRCodes } from './pages/QRCodes'
 import { CreateEvent } from './pages/CreateEvent'
-import { All } from './pages/All'
+import { AllPage } from './pages/All'
 import { NotificationsList } from './components/Transactions/History'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -26,7 +25,7 @@ export function App() {
             <QRCodes eventId={match.params.eventId} numOfSlots={parseInt(match.params.numOfSlots)} />
           );
         }} />
-        <Route exact path="/" component={Landing} />
+        <Route exact path="/" component={AllPage} />
         <Route component={StandaloneApp} />
       </Switch>
     </BrowserRouter>

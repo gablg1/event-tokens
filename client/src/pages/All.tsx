@@ -1,35 +1,62 @@
 import React, {useContext} from 'react'
-import { Container, ContentBlock,  MainContent, Section, SectionRow } from '../components/base/base'
+import { Container, ContentBlock,  ContentRow, MainContent, Section } from '../components/base/base'
 import { utils } from 'ethers'
+import { Contract } from '@ethersproject/contracts'
 import { TextBold, } from '../typography/Text'
-import { Title } from '../typography/Title'
 import { Colors, } from '../global/styles'
 import styled from 'styled-components'
-import { AccountButton } from '../components/account/AccountButton'
 import { useEthers } from '@usedapp/core'
 import { truncAddr, OpenSeaLink, _useContractCall, _useContractCalls, effectiveNFTPrice } from '../helpers';
+import ClaimableTokens from '../abi/ClaimableTokens.json'
 import { CryptoTokensContext } from '../CryptoTokens';
-import DoubleTroubleContract from '../abi/DoubleTrouble.json'
 import GenericNFTContract from '../abi/IERC721Metadata.json'
+import { GitHubLink, EtherscanContractLink, } from '../helpers'
 import { Link } from '../components/base/Link'
 
 
-export function All() {
-  const { account } = useEthers();
-  const { dtAddr } = useContext(CryptoTokensContext);
+export function AllPage() {
+  //const { active } = useEthers();
+  const { eventTokensAddr } = useContext(CryptoTokensContext);
+  return (
+    <MainContent>
+      <Container>
+        <Section>
+          <ContentBlock>
+            <ContentRow>
+              <div>
+                <h1 style={{marginBottom: 20}}>
+                  Crypto Tokens 🖤 by Brex
+                </h1>
+                <div style={{marginBottom: 20}}>We are minting NFTs for attendees of real life events we host. See the ones we've minted so far on <a href={`https://opensea.io/collection/xerb-tokens`}>OpenSea</a>.</div>
 
-  const useDTCall = (method: string, args: any[]) => {
+                <div style={{marginBottom: 35}}>So great to see you back IRL.</div>
+
+                <EtherscanContractLink style={{position: 'absolute', bottom: 40, right: 20}} contract={eventTokensAddr} />
+                <GitHubLink style={{ position: 'absolute', bottom: 20, right: 20}} />
+              </div>
+            </ContentRow>
+          </ContentBlock>
+        </Section>
+      </Container>
+    </MainContent>
+  )
+}
+
+export function All() {
+  const { account, library } = useEthers();
+  const { eventTokensAddr } = useContext(CryptoTokensContext);
+
+  const etContract = new Contract(eventTokensAddr, new utils.Interface(ClaimableTokens.abi), library);
+  const useEtCall = (method: string, args: any[]) => {
     return _useContractCall({
-      abi: new utils.Interface(DoubleTroubleContract.abi),
-      address: dtAddr,
+      abi: etContract.interface,
+      address: eventTokensAddr,
       method: method,
       args: args,
     });
   };
 
-  const allNfts = (useDTCall('allKnownTokens', []) ?? []).filter((t: any) =>
-    !effectiveNFTPrice(t.forSalePrice, t.lastPurchasePrice).isZero()
-  );
+  const allNfts = useEtCall('registeredTokens', []);
   const nameForNfts = _useContractCalls((allNfts).map((t: any) => {
     return {
       abi: new utils.Interface(GenericNFTContract.abi),
@@ -48,13 +75,6 @@ export function All() {
   }))
 
   return (
-    <MainContent>
-      <Container>
-        <Section>
-          <SectionRow>
-            <Title>All NFTs</Title>
-            <AccountButton />
-          </SectionRow>
           <TokensContentBlock>
             <List>
               {allNfts &&
@@ -77,9 +97,6 @@ export function All() {
                 ))}
             </List>
           </TokensContentBlock>
-        </Section>
-      </Container>
-    </MainContent>
   )
 }
 
