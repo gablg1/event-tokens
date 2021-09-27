@@ -71,7 +71,24 @@ export function Claim(props: {eventId: number, fraction: number}) {
   const claimedBy = useEtCall('claimedBy', [props.eventId, props.fraction]);
   const balance = useEtCall('balanceOf', [account, props.eventId]);
 
-  const { nft } = useNft(eventTokensAddr, props.eventId.toString());
+
+  const useNftCached = (collection, tokenId) => {
+    const fetchNft = useNft(collection, tokenId);
+
+    if (collection === eventTokensAddr && tokenId == '1') {
+      return {
+        nft: {
+          name: 'Brex TechCrunch Viewing Party 2021',
+          image: 'https://ipfs.io/ipfs/QmeH9TabgXZZPng44eyc6oZCM6kTtxJTr4ymS3xfi7dtar/TechCrunchViewingParty.gif',
+          description: "Unique NFT issued for Brex's TechCrunch Viewing Party. Ownership of a single fraction of this token grants access to the Xerb Club. September 23, 2021.",
+        }
+      };
+    }
+
+    return fetchNft;
+  }
+
+  const { nft } = useNftCached(eventTokensAddr, props.eventId.toString());
 
   // Write to contract
   const { state: claimState, send: claimSend} = useContractFunction(etContract, 'claimTokenFractions', { transactionName: 'claimTokenFractions' })
