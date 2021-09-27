@@ -75,7 +75,7 @@ export function Claim(props: {eventId: number, fraction: number}) {
   const useNftCached = (collection, tokenId) => {
     const fetchNft = useNft(collection, tokenId);
 
-    if (collection === eventTokensAddr && tokenId == '1') {
+    if (collection === eventTokensAddr && tokenId === '1') {
       return {
         nft: {
           name: 'Brex TechCrunch Viewing Party 2021',

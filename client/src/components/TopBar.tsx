@@ -1,5 +1,4 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { Colors, Shadows, Sizes, Transitions } from '../global/styles'
 import { HeaderContainer } from './base/base'
@@ -20,16 +19,6 @@ export function TopBar() {
               </ToMainBottom>
             </ToMain>
           }
-          <HeaderNavLinks>
-            <HeaderLink activeClassName="active-page" to="/claim">
-              {' '}
-              Claim your NFT{' '}
-            </HeaderLink>
-            <HeaderLink activeClassName="active-page" to="/all">
-              {' '}
-              All NFTs{' '}
-            </HeaderLink>
-          </HeaderNavLinks>
         </HeaderNav>
       </HeaderContainer>
     </Header>
@@ -82,57 +71,4 @@ const ToMainBottom = styled.span`
 
 const EmojiSpacing = styled.span`
   letter-spacing: -0.3em;
-`
-
-const HeaderNavLinks = styled.div`
-  display: grid;
-  position: absolute;
-  left: 50%;
-  grid-auto-flow: column;
-  align-items: center;
-  grid-column-gap: 20px;
-  align-items: center;
-  height: 100%;
-  transform: translateX(-50%);
-`
-
-const HeaderLink = styled(NavLink)`
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  padding: 10px;
-  font-size: 12px;
-  line-height: 24px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  transition: ${Transitions.all};
-  white-space: nowrap;
-
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    width: calc(100% - 20px);
-    height: 2px;
-    background-color: ${Colors.Brex.Orange};
-    transform: scaleX(0);
-    transform-origin: 50% 50%;
-    transition: ${Transitions.all};
-  }
-
-  &:hover {
-    color: ${Colors.Brex.Orange};
-
-    &:after {
-      transform: scaleX(1);
-    }
-  }
-  &.active-page {
-    &:after {
-      transform: scaleX(1);
-    }
-  }
 `
