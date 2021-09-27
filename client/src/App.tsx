@@ -43,7 +43,6 @@ export function StandaloneApp() {
               <ClaimPage eventId={match.params.eventId} fraction={parseInt(match.params.fraction)} />
             );
           }} />
-          <Route exact path="/all" component={All} />
           <Route exact path="/create" component={CreateEvent} />
           <Redirect exact from="/" to="/about" />
         </Switch>
