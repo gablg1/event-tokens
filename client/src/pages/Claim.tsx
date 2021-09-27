@@ -101,7 +101,7 @@ export function Claim(props: {eventId: number, fraction: number}) {
         <Title>{nft && nft.name}</Title>
         <OpenSeaLink collection={eventTokensAddr} tokenId={props.eventId} style={{width: 122, display: 'flex', flexDirection: 'column'}} />
       </div>
-      <ImageCard style={{marginBottom: 20, maxWidth: 700}} imageURI={nft && nft.image}/>
+      <ImageCard style={{marginBottom: 20, maxWidth: 350}} imageURI={nft && nft.image}/>
       <Table striped bordered hover>
         <tbody>
           <tr>
